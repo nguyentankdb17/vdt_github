@@ -55,7 +55,7 @@ def get_filters():
         print('\nNo input taken\n')
         exit()
 
-    # get user input for day of week (all, monday, tuesday, ... sunday)
+    # get user input for day of week (all, monday, tuesday, wednesday, ... sunday)
     try:
         check_loop = True
         messsage = ''
