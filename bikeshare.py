@@ -107,16 +107,11 @@ def load_data(city, month, day):
     df['day_of_week'] = df['Start Time'].dt.day_name()
 
     # filter by month if applicable
-    if month.title() != 'all':
-        # use the index of the months list to get the corresponding int
+    if month.title() != 'All':
         month = months.index(month.title()) + 1
-
-        # filter by month to create the new dataframe
         df = df[df['month'] == month]
 
-    # filter by day of week if applicable
-    if day.title() != 'all':
-        # filter by day of week to create the new dataframe
+    if day.title() != 'All':
         df = df[df['day_of_week'] == day.title()]
 
     return df
