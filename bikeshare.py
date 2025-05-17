@@ -91,6 +91,13 @@ def load_data(city, month, day):
 
     # load data file into a dataframe
     df = pd.read_csv(CITY_DATA[city.title()])
+    # Add exception
+    except FileNotFoundError:
+        print(f"Error: The data file for {city} is missing.")
+        exit()
+    except pd.errors.EmptyDataError:
+        print(f"Error: The data file for {city} is empty or corrupted.")
+        exit()
 
     # convert the Start Time column to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
