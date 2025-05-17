@@ -6,7 +6,7 @@ May 17th 2025
 ### Project Title
 Bike Share Project
 ### Description
-Describe what your project is about and what it does
+A project dedicated to learn about Git
 
 ### Files used
 `bikeshare.py`
