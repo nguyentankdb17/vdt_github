@@ -91,6 +91,13 @@ def load_data(city, month, day):
 
     # load data file into a dataframe
     df = pd.read_csv(CITY_DATA[city.title()])
+    # Add exception
+    except FileNotFoundError:
+        print(f"Error: The data file for {city} is missing.")
+        exit()
+    except pd.errors.EmptyDataError:
+        print(f"Error: The data file for {city} is empty or corrupted.")
+        exit()
 
     # convert the Start Time column to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
@@ -100,16 +107,11 @@ def load_data(city, month, day):
     df['day_of_week'] = df['Start Time'].dt.day_name()
 
     # filter by month if applicable
-    if month.title() != 'all':
-        # use the index of the months list to get the corresponding int
+    if month.title() != 'All':
         month = months.index(month.title()) + 1
-
-        # filter by month to create the new dataframe
         df = df[df['month'] == month]
 
-    # filter by day of week if applicable
-    if day.title() != 'all':
-        # filter by day of week to create the new dataframe
+    if day.title() != 'All':
         df = df[df['day_of_week'] == day.title()]
 
     return df
@@ -117,23 +119,20 @@ def load_data(city, month, day):
 
 def time_stats(df):
     """Displays statistics on the most frequent times of travel."""
-
     print('\nCalculating The Most Frequent Times of Travel...\n')
     start_time = time.time()
 
-    # display the most common month
-    common_month = df['month'].value_counts().idxmax()
-    print('The most common month: {}\n'.format(common_month))
+    # Use .mode() for simplicity
+    common_month = df['month'].mode()[0]
+    print(f'The most common month: {common_month}')
 
-    # display the most common day of week
-    common_day_of_week = df['day_of_week'].value_counts().idxmax()
-    print('The most common day of week: {}\n'.format(common_day_of_week))
+    common_day_of_week = df['day_of_week'].mode()[0]
+    print(f'The most common day of week: {common_day_of_week}')
 
-    # display the most common start hour
-    common_start_hour = df['Start Time'].dt.hour.value_counts().idxmax()
-    print('The most common start hour: {}\n'.format(common_start_hour))
+    common_start_hour = df['Start Time'].dt.hour.mode()[0]
+    print(f'The most common start hour: {common_start_hour}')
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
+    print(f"\nThis took {time.time() - start_time} seconds.")
     print('-'*40)
 
 
